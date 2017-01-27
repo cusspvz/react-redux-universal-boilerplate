@@ -1,0 +1,12 @@
+.git/
+cordova/
+dist/
+node_modules/
+src/
+webpack/
+.*
+._*
+*.md
+*.sh
+*.db
+*.log
