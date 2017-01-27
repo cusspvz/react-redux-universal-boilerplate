@@ -70,12 +70,12 @@ server.get( '/*',
           return next( err )
         }
 
-        if ( ! routerProps ) {
-          return next( new Error("Please add a catch-all 404 route on 'src/router.jsx'") )
-        }
-
         if ( redirectLocation ) {
           return res.redirect( 302, redirectLocation.pathname + redirectLocation.search )
+        }
+
+        if ( ! routerProps ) {
+          return next( new Error("Please add a catch-all 404 route on 'src/router.jsx'") )
         }
 
         req.routerProps = routerProps

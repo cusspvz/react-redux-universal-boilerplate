@@ -9,7 +9,7 @@ import HomePage from './pages/Home'
 
 export default ( store, routerProps ) => (
   <Router {...routerProps}>
-    <Route component={App}>
+    <Route component={App} path="/">
       <IndexRedirect to="/home" />
 
       <Route path="/home" component={HomePage} />
