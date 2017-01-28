@@ -4,15 +4,18 @@ import Route from 'react-router/lib/Route'
 import IndexRedirect from 'react-router/lib/IndexRedirect'
 import Redirect from 'react-router/lib/Redirect'
 
-import App from './containers/app'
-import HomePage from './pages/Home'
+import App from './containers/App/App'
+import HomePage from './pages/Home/HomePage'
+import Error404Page from './pages/Error404/Error404Page'
 
 export default ( store, routerProps ) => (
   <Router {...routerProps}>
-    <Route component={App} path="/">
-      <IndexRedirect to="/home" />
+    <Route component={App} path='/'>
+      <IndexRedirect to='/home' />
 
-      <Route path="/home" component={HomePage} />
+      <Route path='/home' component={HomePage} />
+
+      <Route path='*' component={Error404Page} />
     </Route>
   </Router>
 )

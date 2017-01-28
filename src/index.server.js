@@ -7,7 +7,9 @@ import RouterContext from 'react-router/lib/RouterContext'
 import Provider from 'boilerplate/resources/provider'
 import isArray from 'is-array'
 import compression from 'compression'
-import Routes from './routes'
+import configureRoutes from 'src/routes'
+
+
 
 const server = Express()
 export default server
@@ -60,7 +62,7 @@ server.get( '/*',
   // Route handling
   ( req, res, next ) => {
     const { store } = req
-    req.routes = Routes( store )
+    req.routes = configureRoutes( store )
 
     match(
       { routes: req.routes, location: req.url },
@@ -141,7 +143,7 @@ server.get( '/*',
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <link rel="shortcut icon" href={`${ENV.ASSETS_PUBLIC_PATH}favicon.ico`} />
         </head>
-        <body style={{ overflow: 'hidden' }}>
+        <body>
           <div id="rt">
             {req.vdom}
           </div>

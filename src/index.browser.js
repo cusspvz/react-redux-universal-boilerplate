@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import Routes from './routes'
+import configureRoutes from 'src/routes'
 import Provider from 'boilerplate/resources/provider'
 import configureStore from 'boilerplate/resources/configure-store'
 import history from 'boilerplate/resources/history'
@@ -13,7 +13,7 @@ delete window.__STATE__
 
 // Create Redux store with initial state
 export const store = configureStore( state )
-export const routes = Routes( store, {
+export const routes = configureRoutes( store, {
   history: syncHistoryWithStore( history, store )
 })
 

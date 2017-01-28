@@ -15,6 +15,7 @@ var webpackConfigs = [ browserConfig, nodeConfig ]
 var compiler = Webpack( webpackConfigs )
 
 // Watch for changes and save them to disk
+var nodeHadErrorsBefore = false
 var watcher = compiler.watch({}, function (err, stats) {
   var name =  stats.compilation.name
 
@@ -27,10 +28,17 @@ var watcher = compiler.watch({}, function (err, stats) {
 
   if ( name == nodeConfig.name ) {
     if ( nodeMon ) {
-      // nodeMon.restart()
+
+      // Restart only if it had errors, since HMR handles other cases
+      if ( nodeHadErrorsBefore ) {
+        nodeMon.restart()
+      }
+
     } else {
       startServerMon()
     }
+
+    nodeHadErrorsBefore = stats.hasErrors()
   }
 
 })
