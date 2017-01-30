@@ -1,7 +1,13 @@
 import { addLocaleData } from 'react-intl'
 
 export default async function loadLocale ( locale ) {
-  return await require('src/locales/' + locale +'.i18n.js' )
+  const messages = await require('src/locales/' + locale +'.i18n.js' )
+
+  await require( 'promise?global,[hash].ld!intl/locale-data/jsonp/' + locale )
+  const localeData = await require( 'promise?global,[hash].rild!react-intl/locale-data/' + locale )
+  addLocaleData( localeData )
+
+  return messages.default || messages
 }
 
 // export default function loadLocale ( locale ) {

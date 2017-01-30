@@ -44,5 +44,8 @@ module.exports = function ( ENV ) {
   if ( ENV.STAGING ) require( './environment.staging' )( config, ENV )
   if ( ENV.DEVELOPMENT ) require( './environment.development' )( config, ENV )
 
+  // Try to include webpack.config if it is on source
+  try { require( '../../src/webpack.config' )( config, ENV ) } catch (e) {}
+
   return config
 }
