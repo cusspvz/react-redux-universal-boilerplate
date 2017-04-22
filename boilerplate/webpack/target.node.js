@@ -2,8 +2,8 @@ var Webpack = require( 'webpack' )
 var path = require( 'path' )
 var fs = require( 'fs' )
 
-const FILE = path.join( __dirname, '../../src/index.server.js' )
-const BUILD_PATH = path.join( __dirname, '../../build/server' )
+const FILE = path.join( __dirname, '../node.js' )
+const BUILD_PATH = path.join( __dirname, '../../build/node' )
 
 module.exports = function ( config, ENV ) {
 

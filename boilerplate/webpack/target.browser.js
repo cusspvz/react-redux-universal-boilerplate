@@ -1,7 +1,7 @@
 var Webpack = require( 'webpack' )
 var path = require( 'path' )
 
-const FILE = path.join( __dirname, '../../src/index.browser.js' )
+const FILE = path.join( __dirname, '../browser.js' )
 const BUILD_PATH = path.join( __dirname, '../../build/browser' )
 
 module.exports = function ( config, ENV ) {

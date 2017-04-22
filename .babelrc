@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    "transform-decorators-legacy"
+  ],
+  "presets": [
+    "latest",
+    "stage-0",
+    "react"
+  ]
+}

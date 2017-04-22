@@ -19,7 +19,7 @@ module.exports = function ( ENV ) {
       },
       root: [ path.join(__dirname, '../../') ],
       modulesDirectories: [ 'node_modules' ],
-      extensions: [ '', '.js', '.jsx', '.react.js', '.json', '.split.jsx', '.split.react.js' ]
+      extensions: [ '', '.js', '.jsx' ]
     }
   })
 
@@ -33,6 +33,7 @@ module.exports = function ( ENV ) {
   require( './csv' )( config, ENV )
   require( './babel' )( config, ENV )
   require( './react' )( config, ENV )
+  require( './i18n' )( config, ENV )
   require( './styles' )( config, ENV )
   require( './images' )( config, ENV )
   require( './fonts' )( config, ENV )

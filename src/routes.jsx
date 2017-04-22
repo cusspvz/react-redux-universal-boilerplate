@@ -9,7 +9,7 @@ import HomePage from './pages/Home/HomePage'
 import Error404Page from './pages/Error404/Error404Page'
 
 export default ( store, routerProps ) => (
-  <Router {...routerProps}>
+  <Router {...routerProps} onUpdate={onURLChange}>
     <Route component={App} path='/'>
       <IndexRedirect to='/home' />
 
@@ -19,3 +19,8 @@ export default ( store, routerProps ) => (
     </Route>
   </Router>
 )
+
+// Hooks
+function onURLChange () {
+
+}

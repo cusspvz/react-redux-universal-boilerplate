@@ -22,11 +22,7 @@ export default class HomePage extends Component {
         <Segment vertical inverted textAlign='center' className="jumbotron">
           <Header />
 
-          {welcomeMessage && <Message
-            onDismiss={this.handleDismiss}
-            header='Welcome back!'
-            content='Please try to edit this text while on dev mode'
-          />}
+          <h1 style={{ textAlign: 'center' }}>Ola João Yeah</h1>
         </Segment>
 
         <Segment vertical>

@@ -1,9 +1,11 @@
-export default (styles) => {
+import React from 'react'
 
-  if(styles == null) {
+export default (style) => {
+
+  if(style == null) {
     return (StyledComponent) => {
       throw new TypeError(
-        `rrub/features/styled: missing \`styles\` static property. ` +
+        `rrub/features/styled: missing \`style\` static property. ` +
         `check ${ StyledComponent.name }`
       )
     }
@@ -15,21 +17,27 @@ export default (styles) => {
     const componentDidMount = proto.componentDidMount
     const componentWillUnmount = proto.componentWillUnmount
 
-    Object.assign( proto, {
-      componentDidMount () {
-        styles.use()
-        if(componentDidMount) {
-          componentDidMount.call(this)
-        }
-      },
+    proto.componentDidMount = function () {
+      style.use()
+      if(componentDidMount) {
+        componentDidMount.call(this)
+      }
+    }
 
-      componentWillUnmount () {
-        styles.unuse()
-        if(componentWillUnmount) {
-          componentWillUnmount.call(this)
-        }
-      },
-    })
+    proto.componentWillUnmount = function () {
+      style.unuse()
+      if(componentWillUnmount) {
+        componentWillUnmount.call(this)
+      }
+    }
+
+    if ( ENV.NODE ) {
+      const render = proto.render
+      const StyledProvider = require('./provider').default
+      proto.render = function () {
+        return <StyledProvider style={style} children={render.apply(this,arguments)}/>
+      }
+    }
 
     return StyledComponent
   }

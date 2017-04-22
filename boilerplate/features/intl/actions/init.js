@@ -1,4 +1,5 @@
 import loadLocale from '../utils/load-locale'
+import validLocale from '../utils/valid-locale'
 import storage from '../storage'
 import { defaultLocale, locales } from 'src/locales'
 
@@ -34,6 +35,10 @@ export function intlInit () {
           break
         }
       }
+    }
+
+    if ( locale && ! validLocale( locale ) ) {
+      locale = defaultLocale
     }
 
     // Ensure we have messages before rendering

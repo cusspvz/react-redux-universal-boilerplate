@@ -1,26 +1,29 @@
 import Express from 'express'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import Helmet from 'react-helmet'
+import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import configureStore from 'boilerplate/resources/configure-store'
+import StyledProvider from 'boilerplate/features/styled/provider'
 import match from 'react-router/lib/match'
 import RouterContext from 'react-router/lib/RouterContext'
 import Provider from 'boilerplate/resources/provider'
 import isArray from 'is-array'
 import compression from 'compression'
 import configureRoutes from 'src/routes'
-
-
+import morgan from 'morgan'
+import helmet from 'helmet'
 
 const server = Express()
 export default server
 
-// Don't send express header disclaimer
-server.set( 'x-powered-by', false )
+// Add morgan and helmet
+server.use( morgan('combined') )
+server.use( helmet() )
 
 // Serve compressed assets :)
 server.use( ENV.ASSETS_SERVE_ON_PATH,
   compression({ level: 9 }),
-  Express.static( ENV.ASSETS_SERVE_FROM_PATH )
+  Express.static(ENV.ASSETS_SERVE_FROM_PATH, { maxAge: ENV.DEVELOPMENT ? 0 : 60 * 60 * 24 * 4 })
 )
 
 if ( ENV.DEVELOPMENT ) {
@@ -110,11 +113,11 @@ server.get( '/*',
       }
     )
   },
-  // Prepare document vDOM
   ( req, res, next ) => {
     const { store } = req
 
-    req.vdom = (
+    // Prepare document vDOM
+    const html = renderToString(
       <Provider store={store}>
         <RouterContext {...req.routerProps}>
           { req.routes }
@@ -122,15 +125,14 @@ server.get( '/*',
       </Provider>
     )
 
-    next()
-  },
-  ( req, res, next ) => {
-    const { store } = req
+    // rewind things
+    const helmet = Helmet.rewind()
+    const cssStyle = StyledProvider.rewind()
 
     const string = renderToStaticMarkup(
       <html>
         <head>
-          <title></title>
+          {helmet.title.toComponent()}
 
           {/* Links for letting android know link should be accessed on the app */}
           <link rel="alternate" href={`android-app://${ENV.ANDROID_APP}/http/${ENV.DOMAIN}`} />
@@ -138,15 +140,17 @@ server.get( '/*',
           <link rel="alternate" href={`android-app://${ENV.ANDROID_APP}/https/${ENV.DOMAIN}`} />
           <link rel="alternate" href={`android-app://${ENV.ANDROID_APP}/https/www.${ENV.DOMAIN}`} />
 
+          {helmet.meta.toComponent()}
           <meta name="HandheldFriendly" content="True" />
           <meta name="MobileOptimized" content="320" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <link rel="shortcut icon" href={`${ENV.ASSETS_PUBLIC_PATH}favicon.ico`} />
+          {helmet.link.toComponent()}
+          <style id="preloaded" type="text/css" dangerouslySetInnerHTML={{ __html: cssStyle }} />
         </head>
         <body>
-          <div id="rt">
-            {req.vdom}
-          </div>
+          <div id="rt" dangerouslySetInnerHTML={{ __html: html }} />
+          {helmet.script.toComponent()}
           <script dangerouslySetInnerHTML={{ __html: 'window.__STATE__='+JSON.stringify( store.getState() )}} />
           <script src={`${ENV.ASSETS_PUBLIC_PATH}index.js?v=${ENV.VERSION}`}></script>
         </body>
@@ -155,7 +159,6 @@ server.get( '/*',
 
     // pipe stream to response
     res.send( string )
-    res.end()
   }
 )
 
@@ -163,7 +166,6 @@ server.get( '/*',
 server.use(( error, req, res, next ) => {
   // pipe stream to response
   res.send( `<html><head><title>Error</title></head><body><pre>${error}</pre></body></html>` )
-  res.end()
 })
 
 // Create Servers

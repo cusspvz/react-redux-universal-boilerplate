@@ -1,7 +1,7 @@
 var Webpack = require( 'webpack' )
 var path = require( 'path' )
 
-const FILE = path.join( __dirname, '../../src/index.cordova.js' )
+const FILE = path.join( __dirname, '../cordova.js' )
 const BUILD_PATH = path.join( __dirname, '../../build/cordova' )
 
 const PUBLIC_PATH = undefined
