@@ -9,7 +9,6 @@ import { syncHistoryWithStore } from 'react-router-redux'
 // Grab the state from a global injected into server-generated HTML
 const state = window.__STATE__
 delete window.__STATE__
-// TODO: delete script node
 
 // Create Redux store with initial state
 export const store = configureStore( state )
@@ -18,7 +17,7 @@ export const routes = configureRoutes( store, {
 })
 
 // dispatch initial auth before rendering
-import { init } from 'boilerplate/resources/actions'
+import { init } from 'src/actions'
 const storeReady = store.dispatch( init( store ) )
 
 storeReady.then(() => {
@@ -28,4 +27,11 @@ storeReady.then(() => {
     </Provider>,
     document.getElementById( 'rt' )
   )
+
+  // Delete preloaded style node
+  const preloadedStyle = document.getElementById('preloaded')
+  if ( preloadedStyle ) {
+    preloadedStyle.remove()
+  }
+
 })

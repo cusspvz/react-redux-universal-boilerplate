@@ -70,7 +70,6 @@ server.get( '/*',
     match(
       { routes: req.routes, location: req.url },
       async ( err, redirectLocation, routerProps ) => {
-
         if ( err ) {
           return next( err )
         }
@@ -130,7 +129,7 @@ server.get( '/*',
     const cssStyle = StyledProvider.rewind()
 
     const string = renderToStaticMarkup(
-      <html>
+      <html {...helmet.htmlAttributes.toComponent()}>
         <head>
           {helmet.title.toComponent()}
 
@@ -148,7 +147,7 @@ server.get( '/*',
           {helmet.link.toComponent()}
           <style id="preloaded" type="text/css" dangerouslySetInnerHTML={{ __html: cssStyle }} />
         </head>
-        <body>
+        <body {...helmet.bodyAttributes.toComponent()}>
           <div id="rt" dangerouslySetInnerHTML={{ __html: html }} />
           {helmet.script.toComponent()}
           <script dangerouslySetInnerHTML={{ __html: 'window.__STATE__='+JSON.stringify( store.getState() )}} />
@@ -165,7 +164,7 @@ server.get( '/*',
 /* Error rendering */
 server.use(( error, req, res, next ) => {
   // pipe stream to response
-  res.send( `<html><head><title>Error</title></head><body><pre>${error}</pre></body></html>` )
+  res.send( `<html><head><title>Error</title></head><body><pre>${error && error.stack || error}</pre></body></html>` )
 })
 
 // Create Servers

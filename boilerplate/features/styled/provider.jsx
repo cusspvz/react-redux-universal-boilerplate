@@ -27,7 +27,7 @@ function reducePropsToState(propsList) {
 }
 
 function handleStateChangeOnClient(style) {
-  Object.assign(document.body.style, style)
+  // Object.assign(document.body.style, style)
 }
 
 export default withSideEffect(

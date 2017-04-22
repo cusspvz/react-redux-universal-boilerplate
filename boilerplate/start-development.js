@@ -69,7 +69,7 @@ function startServerMon () {
   })
 
   nodeMon.on('restart', function() {
-    console.log('[node-server]: restarting!');
+    console.log('[node-server]: restarting!')
   })
 }
 

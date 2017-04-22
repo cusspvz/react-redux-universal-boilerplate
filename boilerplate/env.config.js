@@ -50,7 +50,7 @@ module.exports = function setup ( env, target ) {
     ENV.DEVELOPMENT && config.development && config.development.iosApp ||
     ENV.DOMAIN
 
-  ENV.ASSETS_SERVE_FROM_PATH = path.join( __dirname, '../build/browser' )
+  ENV.ASSETS_SERVE_FROM_PATH = './build/browser'
   ENV.ASSETS_SERVE_ON_PATH =
     ENV.PRODUCTION && config.production && config.production.serveBrowserAssetsOver ||
     ENV.STAGING && config.staging && config.staging.serveBrowserAssetsOver ||
@@ -62,6 +62,12 @@ module.exports = function setup ( env, target ) {
     ENV.STAGING && config.staging && config.staging.publicBrowserAssetsPath ||
     ENV.DEVELOPMENT && config.development && config.development.publicBrowserAssetsPath ||
     '/build/'
+
+  ENV.BACKEND_ENDPOINT =
+    ENV.PRODUCTION && config.production && config.production.backendEndpoint ||
+    ENV.STAGING && config.staging && config.staging.backendEndpoint ||
+    ENV.DEVELOPMENT && config.development && config.development.backendEndpoint ||
+    '/'
 
   ENV.HOSTNAME =
     ENV.PRODUCTION && 'www.' + ENV.DOMAIN ||

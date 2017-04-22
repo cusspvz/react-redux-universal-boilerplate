@@ -15,13 +15,11 @@ export default class ConnectedIntlProvider extends Component {
   render () {
     const { locale, messages, children } = this.props
 
-    const lang = {
-      locale,
-      messages
-    }
-
     return (
-      <IntlProvider {...lang}>
+      <IntlProvider {...{
+        locale,
+        messages
+      }}>
         {children}
       </IntlProvider>
     )

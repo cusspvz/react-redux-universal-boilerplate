@@ -25,7 +25,11 @@ export default (style) => {
     }
 
     proto.componentWillUnmount = function () {
-      style.unuse()
+      try{
+        style.unuse()
+      } catch (e) {
+        // sometimes style is already unused
+      }
       if(componentWillUnmount) {
         componentWillUnmount.call(this)
       }
