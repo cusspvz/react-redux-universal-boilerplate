@@ -74,5 +74,13 @@ module.exports = function setup ( env, target ) {
     ENV.STAGING && 'staging.' + ENV.DOMAIN ||
     ENV.DEVELOPMENT && 'development.' + ENV.DOMAIN
 
+  const custom = config[ENV.NODE_ENV]
+  if ( typeof custom == 'object' ) {
+    for ( let key in custom ) {
+      let value = custom[key]
+      ENV[key] = value
+    }
+  }
+
   return ENV
 }

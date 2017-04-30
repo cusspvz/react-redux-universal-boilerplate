@@ -3,7 +3,7 @@
     "transform-decorators-legacy"
   ],
   "presets": [
-    "latest",
+    "env",
     "stage-0",
     "react"
   ]
