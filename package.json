@@ -12,9 +12,9 @@
     }
   },
   "scripts": {
-    "multi": "npm_multi () { for cmd in $*; do npm run $cmd || exit 1; done; }; npm_multi",
-    "clean:build": "rm -fR build/",
-    "dev": "npm run clean:build; node boilerplate/start-development"
+    "build": "rm -fR build/; TARGET=browser webpack --config boilerplate/webpack.config && TARGET=node webpack --config boilerplate/webpack.config && exit 0 || exit 1",
+    "start": "node --max_old_space_size=250 build/node",
+    "dev": "rm -fR build/; node boilerplate/start-development"
   },
   "author": "José Moreira <josemoreiravarzim@gmail.com>",
   "license": "ISC",
