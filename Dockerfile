@@ -3,7 +3,7 @@ MAINTAINER José Moreira
 
 ARG NODE_ENV=production
 
-ADD ./build/server /app/build/server
+ADD ./build/node /app/build/node
 ADD ./build/browser /app/build/browser
 ADD ./package.json /app/package.json
 
@@ -15,3 +15,4 @@ RUN \
   rm -fR /var/cache/apk/* ~/.npmrc
 
 CMD [ "start" ]
+EXPOSE 3000

@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
 import IntlProvider from 'boilerplate/features/intl/provider'
+import SrcProvider from 'src/provider'
 
-export default ({ store, children }) => (
-  <ReduxProvider store={store}>
+export default (props) => (
+  <ReduxProvider store={props.store}>
     <IntlProvider>
-      {children}
+      <SrcProvider {...props}>
+        {props.children}
+      </SrcProvider>
     </IntlProvider>
   </ReduxProvider>
 )

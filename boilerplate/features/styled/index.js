@@ -15,6 +15,7 @@ export default (style) => {
     const proto = StyledComponent.prototype
 
     const componentDidMount = proto.componentDidMount
+    const componentDidUpdate = proto.componentDidUpdate
     const componentWillUnmount = proto.componentWillUnmount
 
     proto.componentDidMount = function () {
@@ -24,12 +25,15 @@ export default (style) => {
       }
     }
 
-    proto.componentWillUnmount = function () {
-      try{
-        style.unuse()
-      } catch (e) {
-        // sometimes style is already unused
+    proto.componentDidUpdate = function () {
+      try{ style.use() } catch (e) { /* yolo */ }
+      if(componentDidUpdate) {
+        componentDidUpdate.call(this)
       }
+    }
+
+    proto.componentWillUnmount = function () {
+      try{ style.unuse() } catch (e) { /* yolo */ }
       if(componentWillUnmount) {
         componentWillUnmount.call(this)
       }
