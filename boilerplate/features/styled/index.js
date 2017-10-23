@@ -19,7 +19,7 @@ export default (style) => {
     const componentWillUnmount = proto.componentWillUnmount
 
     proto.componentDidMount = function () {
-      style.use()
+      try{ style.use() } catch (e) { /* yolo */ }
       if(componentDidMount) {
         componentDidMount.apply(this,arguments)
       }

@@ -19,10 +19,10 @@ export default server
 // Add morgan and helmet
 server.use( morgan('combined') )
 server.use( helmet() )
+server.use( compression({ level: 9 }) )
 
 // Serve compressed assets :)
 server.use( ENV.ASSETS_SERVE_ON_PATH,
-  compression({ level: 9 }),
   Express.static(ENV.ASSETS_SERVE_FROM_PATH, { maxAge: ENV.DEVELOPMENT ? 0 : 60 * 60 * 24 * 4 })
 )
 
