@@ -19,23 +19,23 @@ export default (style) => {
     const componentWillUnmount = proto.componentWillUnmount
 
     proto.componentDidMount = function () {
-      style.use()
+      try{ style.use() } catch (e) { /* yolo */ }
       if(componentDidMount) {
-        componentDidMount.call(this)
+        componentDidMount.apply(this,arguments)
       }
     }
 
     proto.componentDidUpdate = function () {
       try{ style.use() } catch (e) { /* yolo */ }
       if(componentDidUpdate) {
-        componentDidUpdate.call(this)
+        componentDidUpdate.apply(this,arguments)
       }
     }
 
     proto.componentWillUnmount = function () {
       try{ style.unuse() } catch (e) { /* yolo */ }
       if(componentWillUnmount) {
-        componentWillUnmount.call(this)
+        componentWillUnmount.apply(this,arguments)
       }
     }
 

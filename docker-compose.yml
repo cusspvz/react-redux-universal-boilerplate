@@ -1,0 +1,15 @@
+frontend-staging:
+  build: .
+  # image: company/rrub:staging
+  environment:
+    VIRTUAL_HOST: staging.company.com
+    VIRTUAL_PORT: 3000
+    VIRTUAL_PROTO: http
+
+frontend-production:
+  build: .
+  # image: company/rrub:production
+  environment:
+    VIRTUAL_HOST: www.company.com
+    VIRTUAL_PORT: 3000
+    VIRTUAL_PROTO: http
